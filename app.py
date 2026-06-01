@@ -61,7 +61,7 @@ def add_to_cart(product_id):
     connection.close()
     
     if not product:
-        return "Product not found!", 404
+        return jsonify({'success': False, 'error': 'Product not found'}), 404
     
     if 'cart' not in session:
         session['cart'] = {}
@@ -80,7 +80,9 @@ def add_to_cart(product_id):
     
     session['cart'] = cart
     session.modified = True
-    return redirect(url_for('products'))
+    
+    # Return JSON for AJAX requests
+    return jsonify({'success': True})
 
 @app.route('/cart')
 def view_cart():
