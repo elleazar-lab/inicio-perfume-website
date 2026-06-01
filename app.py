@@ -226,9 +226,10 @@ def place_order():
         flash(f'Invalid {payment_method} reference number format.', 'error')
         return redirect(url_for('checkout_page'))
     
-    # Check for duplicate reference
     connection = get_db_connection()
     cursor = connection.cursor()
+    
+    # Check for duplicate reference
     cursor.execute("SELECT COUNT(*) FROM orders WHERE payment_reference = %s", (payment_reference,))
     count = cursor.fetchone()[0]
     if count > 0:
@@ -251,34 +252,43 @@ def place_order():
     
     full_address = f"{address}, {city}, {region} {postal_code}".strip()
     
-    # Calculate total
+    # Calculate total with discount
     total = 0
+    total_quantity = 0
     for item in session['cart'].values():
         total += item['price'] * item['quantity']
+        total_quantity += item['quantity']
     
-    # Check stock
-    for item in session['cart'].values():
-        cursor.execute("SELECT stock FROM products WHERE id = %s", (item['id'],))
-        result = cursor.fetchone()
-        if result:
-            current_stock = result[0]
-            if current_stock < item['quantity']:
-                cursor.close()
-                connection.close()
-                return f"Insufficient stock for {item['name']}. Available: {current_stock}", 400
+    pairs = total_quantity // 2
+    discount = pairs * 99
+    final_total = total - discount
     
-    # Generate unique order number: YYYYMMDD-HHMMSS-XXXX
+    # Generate unique order number
+    from datetime import datetime
+    import random
+    import string
     timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')
     random_suffix = ''.join(random.choices(string.digits, k=4))
     order_number = f"{timestamp}-{random_suffix}"
     
-    # Insert order
-    cursor.execute("""
-        INSERT INTO orders (order_number, customer_name, customer_email, total_amount, status, payment_method, payment_reference, shipping_address, phone, order_note)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-    """, (order_number, customer_name, customer_email, total, 'pending', payment_method, payment_reference, full_address, phone, order_note))
+    print(f"Attempting to insert order: {order_number}, {customer_name}, {customer_email}, {final_total}, {payment_method}, {payment_reference}, {full_address}, {phone}, {order_note}")
     
-    order_id = cursor.lastrowid
+    # Insert order - MAKE SURE COLUMN NAMES MATCH YOUR DATABASE
+    try:
+        cursor.execute("""
+            INSERT INTO orders (order_number, customer_name, customer_email, total_amount, status, payment_method, payment_reference, shipping_address, phone, order_note)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """, (order_number, customer_name, customer_email, final_total, 'pending', payment_method, payment_reference, full_address, phone, order_note))
+        
+        order_id = cursor.lastrowid
+        print(f"Order inserted with ID: {order_id}")
+        
+    except Exception as e:
+        print(f"Error inserting order: {e}")
+        cursor.close()
+        connection.close()
+        flash('Error processing order. Please try again.', 'error')
+        return redirect(url_for('checkout_page'))
     
     # Insert order items and update stock
     for item_id, item in session['cart'].items():
@@ -296,7 +306,7 @@ def place_order():
     # Clear the cart
     session.pop('cart', None)
     
-    return render_template('order_confirmation.html', order_number=order_number, total=total, customer_name=customer_name)
+    return render_template('order_confirmation.html', order_number=order_number, total=final_total, customer_name=customer_name)
 
 # ========== CHECKOUT & ORDER ROUTES ==========
 
