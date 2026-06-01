@@ -271,16 +271,15 @@ def place_order():
     random_suffix = ''.join(random.choices(string.digits, k=4))
     order_number = f"{timestamp}-{random_suffix}"
     
-    print(f"Attempting to insert order: {order_number}, {customer_name}, {customer_email}, {final_total}, {payment_method}, {payment_reference}, {full_address}, {phone}, {order_note}")
-    
-    # Insert order - MAKE SURE COLUMN NAMES MATCH YOUR DATABASE
+    # Insert order and RETURN the id (PostgreSQL way)
     try:
         cursor.execute("""
             INSERT INTO orders (order_number, customer_name, customer_email, total_amount, status, payment_method, payment_reference, shipping_address, phone, order_note)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING id
         """, (order_number, customer_name, customer_email, final_total, 'pending', payment_method, payment_reference, full_address, phone, order_note))
         
-        order_id = cursor.lastrowid
+        order_id = cursor.fetchone()[0]
         print(f"Order inserted with ID: {order_id}")
         
     except Exception as e:
