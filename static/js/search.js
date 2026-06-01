@@ -1,23 +1,12 @@
 // Search functionality
 let searchProducts = [];
 
-// Prevent search icon from triggering page transitions
-document.addEventListener('DOMContentLoaded', function() {
-    const searchIcon = document.getElementById('searchIcon');
-    if (searchIcon) {
-        searchIcon.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            openSearchModal();
-        });
-    }
-});
-
 function loadSearchProducts() {
     fetch('/api/search_products')
         .then(response => response.json())
         .then(data => {
             searchProducts = data;
+            console.log('Products loaded for search:', data.length);
         })
         .catch(error => console.error('Error loading products:', error));
 }
@@ -30,7 +19,7 @@ function openSearchModal() {
         backdrop.classList.add('active');
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
-            searchInput.focus();
+            setTimeout(() => searchInput.focus(), 100);
         }
     }
 }
@@ -98,7 +87,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     
     if (searchIcon) {
-        searchIcon.addEventListener('click', openSearchModal);
+        // Prevent page transition interference
+        searchIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openSearchModal();
+        });
     }
     if (closeBtn) {
         closeBtn.addEventListener('click', closeSearchModal);
