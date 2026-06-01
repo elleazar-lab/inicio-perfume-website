@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | INICIO</title>
+<link rel="stylesheet" href="/static/css/animations.css">
+    <style>
+        @font-face {
+            font-family: 'Cronde';
+            src: url('/static/fonts/cronde.woff2') format('woff2'),
+                 url('/static/fonts/cronde.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: #B9B59F;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .brand {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 24px;
+            font-weight: normal;
+            color: #060644;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-links a {
+            font-family: 'Montserrat', sans-serif;
+            color: #060644;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .icon {
+            width: 22px;
+            height: 22px;
+            stroke: #060644;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        
+        .register-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .register-box {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(6, 6, 68, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid #B9B59F;
+        }
+        
+        .register-box h2 {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 32px;
+            color: #060644;
+            margin-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+        
+        .register-box p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .input-group label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #060644;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #060644;
+        }
+        
+        .register-btn {
+            width: 100%;
+            padding: 12px;
+            background: #060644;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .register-btn:hover {
+            opacity: 0.8;
+        }
+        
+        .login-link {
+            margin-top: 20px;
+        }
+        
+        .login-link a {
+    color: #060644;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+        
+        .login-link a:hover {
+            text-decoration: underline;
+            opacity: 0.7;
+        }
+        
+        .error-message {
+            background: #fee;
+            color: #e53e3e;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            text-align: center;
+        }
+        
+        footer {
+            background: #060644;
+            color: #B9B59F;
+            text-align: center;
+            padding: 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                position: static;
+                transform: none;
+                gap: 30px;
+                margin: 10px 0;
+            }
+            .register-box {
+                padding: 30px 20px;
+            }
+            .register-box h2 {
+                font-size: 28px;
+            }
+        }
+
+/* Search Modal */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+    z-index: 2000;
+    transition: right 0.3s ease;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.search-overlay.active {
+    right: 0;
+}
+
+.search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-header h3 {
+    font-family: 'Cronde', 'Georgia', serif;
+    font-size: 24px;
+    color: #060644;
+    font-weight: normal;
+}
+
+.close-search {
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.close-search:hover {
+    color: #e53e3e;
+}
+
+.search-input-wrapper {
+    margin-bottom: 30px;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+}
+
+.search-input-wrapper input:focus {
+    outline: none;
+    border-color: #060644;
+}
+
+.search-results {
+    margin-top: 20px;
+}
+
+.search-result-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-result-item:hover {
+    background: #f9f9f9;
+}
+
+.search-result-image {
+    width: 60px;
+    height: 60px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.search-result-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-result-info h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #060644;
+    margin-bottom: 5px;
+}
+
+.search-result-info p {
+    font-size: 13px;
+    color: #888;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.search-overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999;
+    display: none;
+}
+
+.search-overlay-backdrop.active {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="brand">INICIO</a>
+        <div class="nav-links">
+            <a href="/">HOME</a>
+            <a href="/products">PERFUMES</a>
+            <a href="/our-story">OUR STORY</a>
+            <a href="/faq">FAQS</a>
+        </div>
+        <div class="nav-icons">
+            <a href="#" id="searchIcon" title="Search">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="10.5" cy="10.5" r="7.5"/>
+                    <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+                </svg>
+            </a>
+            <a href="/cart" title="Cart">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="9" cy="20" r="1.5"/>
+                    <circle cx="17" cy="20" r="1.5"/>
+                    <path d="M3 3h2l2 12h12l2-8H6"/>
+                </svg>
+            </a>
+            <a href="/login" title="Login">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M5 20v-2a7 7 0 0 1 14 0v2"/>
+                </svg>
+            </a>
+        </div>
+    </nav>
+
+    <div class="register-container">
+        <div class="register-box">
+            <h2>Create Account</h2>
+            <p>Join our fragrance community</p>
+            
+            {% if error %}
+            <div class="error-message">{{ error }}</div>
+            {% endif %}
+            
+            <form method="POST" action="/register">
+                <div class="input-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Create a password">
+                </div>
+                
+                <button type="submit" class="register-btn">Create Account</button>
+            </form>
+            
+            <div class="login-link">
+                <a href="/login">Already have an account? Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 INICIO Parfum. All rights reserved.</p>
+        <p style="margin-top: 10px; font-size: 12px;">Luxury fragrances for the bold and the brave</p>
+    </footer>
+
+   <!-- Search Modal -->
+    <div class="search-overlay-backdrop" id="searchBackdrop"></div>
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-header">
+            <h3>Search</h3>
+            <span class="close-search" id="closeSearch">&times;</span>
+        </div>
+        <div class="search-input-wrapper">
+            <input type="text" id="searchInput" placeholder="Search for a fragrance..." autocomplete="off">
+        </div>
+        <div class="search-results" id="searchResults">
+        </div>
+    </div>
+
+    <script src="/static/js/search.js"></script>
+<script src="/static/js/transitions.js"></script>
+
+</body>
+</html>

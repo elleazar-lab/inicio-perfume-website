@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | INICIO</title>
+<link rel="stylesheet" href="/static/css/animations.css">
+    <style>
+        @font-face {
+            font-family: 'Cronde';
+            src: url('/static/fonts/cronde.woff2') format('woff2'),
+                 url('/static/fonts/cronde.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+        }
+        
+        .navbar {
+            background: #B9B59F;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .brand {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 24px;
+            font-weight: normal;
+            color: #060644;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-links a {
+            font-family: 'Montserrat', sans-serif;
+            color: #060644;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .icon {
+            width: 22px;
+            height: 22px;
+            stroke: #060644;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        
+        .breadcrumb {
+    padding: 40px 40px 20px 40px;
+    background: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+}
+
+.breadcrumb a {
+    color: #060644;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    opacity: 0.7;
+}
+
+/* Add spacing around the > symbol */
+.breadcrumb span {
+    margin: 0 8px;
+}
+        
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: #060644;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px 60px;
+            min-height: 60vh;
+        }
+        
+        .cart-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .cart-header h1 {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 48px;
+            color: #060644;
+            margin-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+        
+        .cart-header p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .empty-cart p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .empty-cart .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #060644;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+        }
+        
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .cart-table th {
+            text-align: left;
+            padding: 15px;
+            background: #fafafa;
+            color: #060644;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 2px solid #B9B59F;
+        }
+        
+        .cart-table td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        
+        .product-info h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #060644;
+            margin-bottom: 5px;
+        }
+        
+        .product-info p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .quantity-input {
+            width: 70px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+        }
+        
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+        }
+        
+        .remove-btn:hover {
+            color: #e53e3e;
+        }
+        
+        .cart-summary {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #B9B59F;
+        }
+        
+        .order-note {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .order-note label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #060644;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .order-note textarea {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+        }
+
+.price-breakdown {
+    margin: 20px 0;
+    padding: 15px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.breakdown-item.discount {
+    color: #28a745;
+}
+
+.breakdown-item.total {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.breakdown-item.discount small {
+    font-size: 11px;
+    color: #666;
+}
+        
+        .estimated-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .estimated-total span:first-child {
+            font-size: 16px;
+            font-weight: 600;
+            color: #060644;
+        }
+        
+        .total-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #060644;
+        }
+        
+        .total-currency {
+            font-size: 14px;
+            font-weight: 500;
+            color: #888;
+            margin-left: 5px;
+        }
+        
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .continue-shopping {
+            color: #060644;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+        }
+        
+        .checkout-btn {
+            display: inline-block;
+            padding: 12px 40px;
+            background: #060644;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        footer {
+            background: #060644;
+            color: #B9B59F;
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                position: static;
+                transform: none;
+                gap: 30px;
+                margin: 10px 0;
+            }
+        }
+
+/* Search Modal */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+    z-index: 2000;
+    transition: right 0.3s ease;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.search-overlay.active {
+    right: 0;
+}
+
+.search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-header h3 {
+    font-family: 'Cronde', 'Georgia', serif;
+    font-size: 24px;
+    color: #060644;
+    font-weight: normal;
+}
+
+.close-search {
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.close-search:hover {
+    color: #e53e3e;
+}
+
+.search-input-wrapper {
+    margin-bottom: 30px;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+}
+
+.search-input-wrapper input:focus {
+    outline: none;
+    border-color: #060644;
+}
+
+.search-results {
+    margin-top: 20px;
+}
+
+.search-result-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-result-item:hover {
+    background: #f9f9f9;
+}
+
+.search-result-image {
+    width: 60px;
+    height: 60px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.search-result-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-result-info h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #060644;
+    margin-bottom: 5px;
+}
+
+.search-result-info p {
+    font-size: 13px;
+    color: #888;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.search-overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999;
+    display: none;
+}
+
+.search-overlay-backdrop.active {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="brand">INICIO</a>
+        <div class="nav-links">
+            <a href="/">HOME</a>
+            <a href="/products">PERFUMES</a>
+            <a href="/our-story">OUR STORY</a>
+            <a href="/faq">FAQS</a>
+        </div>
+        <div class="nav-icons">
+    <a href="#" id="searchIcon" title="Search">
+        <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+            <circle cx="10.5" cy="10.5" r="7.5"/>
+            <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+    </a>
+    <a href="/cart" title="Cart">
+        <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+            <circle cx="9" cy="20" r="1.5"/>
+            <circle cx="17" cy="20" r="1.5"/>
+            <path d="M3 3h2l2 12h12l2-8H6"/>
+        </svg>
+    </a>
+    <a href="/dashboard_redirect" title="Account">
+        <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M5 20v-2a7 7 0 0 1 14 0v2"/>
+        </svg>
+    </a>
+</div>
+    </nav>
+
+    <div class="breadcrumb">
+    <a href="/">Home</a> <span>></span> <a href="/products">Perfumes</a> <span>></span> <span>Cart</span>
+</div>
+
+    <div class="cart-container">
+        <div class="cart-header">
+            <h1>Your Cart</h1>
+            <p>Let's confirm your order!</p>
+        </div>
+
+        {% if cart_items and cart_items|length > 0 %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+    {% for item in cart_items %}
+    <tr id="cart-item-{{ item.id }}">
+        <td>
+            <div class="product-info">
+                <h3>{{ item.name }}</h3>
+                <p>Size: 50ml</p>
+            </div>
+        </td>
+        <td>₱{{ "%.2f"|format(item.price) }}</td>
+        <td>
+            <form method="POST" action="/update_cart/{{ item.id }}" style="display: inline;" class="update-form" id="update-form-{{ item.id }}">
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="quantity-input" id="quantity-{{ item.id }}" data-product-id="{{ item.id }}" onchange="this.form.submit()">
+            </form>
+        </td>
+        <td>₱{{ "%.2f"|format(item.subtotal) }}</td>
+        <td>
+            <button type="button" class="remove-btn" onclick="removeFromCart({{ item.id }}, '{{ item.name }}')">Remove</button>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+        </table>     
+    
+    <div class="price-breakdown">
+        <div class="breakdown-item">
+            <span>Subtotal ({{ total_quantity }} items)</span>
+            <span>₱{{ "%.2f"|format(subtotal) }}</span>
+        </div>
+        {% if discount > 0 %}
+        <div class="breakdown-item discount">
+            <span>Special Offer: Buy 2 for ₱799 <br><small>(Save ₱99 per pair)</small></span>
+            <span>-₱{{ "%.2f"|format(discount) }}</span>
+        </div>
+        {% endif %}
+        <div class="breakdown-item total">
+            <span>Estimated Total</span>
+            <span class="total-amount">₱{{ "%.2f"|format(total) }}<span class="total-currency">PHP</span></span>
+        </div>
+    </div>
+    
+    <div class="cart-actions">
+        <a href="/products" class="continue-shopping">← Continue Shopping</a>
+        <a href="/checkout_page" class="checkout-btn">Check Out →</a>
+    </div>
+</div>
+     
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <p>Your cart is empty</p>
+            <a href="/products" class="btn">Continue Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>© 2024 INICIO Parfum. All rights reserved.</p>
+        <p style="margin-top: 10px; font-size: 12px;">Luxury fragrances for the bold and the brave</p>
+    </footer>
+
+    <script>
+        // Allow typing numbers in quantity field and submit on Enter or blur
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            // Submit when Enter key is pressed
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.form.submit();
+                }
+            });
+            
+            // Submit when focus leaves the input (clicking outside)
+            input.addEventListener('blur', function() {
+                const currentValue = parseInt(this.value);
+                if (currentValue >= 1 && !isNaN(currentValue)) {
+                    this.form.submit();
+                } else {
+                    this.value = 1;
+                    this.form.submit();
+                }
+            });
+        });
+        
+        // Add notification on remove
+        document.querySelectorAll('.remove-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const btn = this.querySelector('.remove-btn');
+                const productName = btn.getAttribute('data-name');
+                
+                // Show notification
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = `${productName} has been removed from your cart.`;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3500);
+            });
+        });
+    </script>
+
+<!-- Search Modal -->
+<div class="search-overlay-backdrop" id="searchBackdrop"></div>
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-header">
+        <h3>Search</h3>
+        <span class="close-search" id="closeSearch">&times;</span>
+    </div>
+    <div class="search-input-wrapper">
+        <input type="text" id="searchInput" placeholder="Search for a fragrance..." autocomplete="off">
+    </div>
+    <div class="search-results" id="searchResults">
+    </div>
+</div>
+
+<script>
+    function removeFromCart(productId, productName) {
+    const btn = event.target;
+    const originalText = btn.textContent;
+    
+    btn.disabled = true;
+    btn.textContent = 'Removing...';
+    btn.style.opacity = '0.6';
+    
+    fetch(`/remove_from_cart/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `${productName} has been removed from your cart.`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+                location.reload();
+            }, 1500);
+        }
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = originalText;
+        btn.style.opacity = '1';
+    });
+}
+</script>
+
+<script src="/static/js/search.js"></script>
+<script src="/static/js/transitions.js"></script>
+
+</body>
+</html>
