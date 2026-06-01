@@ -619,23 +619,36 @@ footer {
 }
 
     function addToCart(productId, productName) {
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.innerHTML = `Added to cart`;
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.remove();
-        }, 2000);
-        
-        fetch(`/add_to_cart/${productId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'quantity=1'
-        });
-    }
+    console.log('Adding to cart:', productId, productName);
+    
+    fetch(`/add_to_cart/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'quantity=1'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show notification
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `${productName} added to cart!`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
+        } else {
+            alert('Error adding to cart');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Network error');
+    });
+}
 
     // Filter button functionality
     document.querySelectorAll('.filter-btn').forEach(btn => {
