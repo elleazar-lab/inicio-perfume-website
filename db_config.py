@@ -4,23 +4,24 @@ import os
 
 def get_db_connection():
     try:
-        # Check if running on Render (production)
+        # For Render deployment
         if os.environ.get('RENDER'):
             connection = psycopg2.connect(
                 host=os.environ.get('PGHOST'),
                 database=os.environ.get('PGDATABASE'),
                 user=os.environ.get('PGUSER'),
                 password=os.environ.get('PGPASSWORD'),
-                port=os.environ.get('PGPORT', 5432)
+                port=os.environ.get('PGPORT', 5432),
+                sslmode='require'
             )
         else:
-            # Local development - you'll need PostgreSQL installed locally
-            # Or comment this out and use render's database for testing
+            # Local development
             connection = psycopg2.connect(
                 host='localhost',
                 database='perfume_shop',
                 user='postgres',
-                password=''  # Your local PostgreSQL password
+                password='',  # Your local PostgreSQL password
+                port=5432
             )
         return connection
     except Error as e:
