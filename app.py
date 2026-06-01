@@ -82,7 +82,7 @@ def add_to_cart(product_id):
     session.modified = True
     
     # Return JSON for AJAX requests
-    return jsonify({'success': True})
+    return jsonify({'success': True, 'message': f'Added {quantity} x {product["name"]} to cart'})
 
 @app.route('/cart')
 def view_cart():
