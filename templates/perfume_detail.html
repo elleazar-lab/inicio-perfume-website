@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} | INICIO</title>
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <style>
+        @font-face {
+            font-family: 'Cronde';
+            src: url('/static/fonts/cronde.woff2') format('woff2'),
+                 url('/static/fonts/cronde.ttf') format('truetype');
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: #B9B59F;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .brand {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 24px;
+            font-weight: normal;
+            color: #060644;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 50px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-links a {
+            font-family: 'Montserrat', sans-serif;
+            color: #060644;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .icon {
+            width: 22px;
+            height: 22px;
+            stroke: #060644;
+            stroke-width: 1.5;
+            fill: none;
+            cursor: pointer;
+        }
+        
+        .breadcrumb {
+            padding: 40px 40px 20px 40px;
+            background: white;
+            font-size: 13px;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .breadcrumb a {
+            color: #060644;
+            text-decoration: none;
+        }
+        
+        .breadcrumb span {
+            margin: 0 8px;
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+        
+        .product-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .product-detail-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-detail-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .product-detail-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-detail-name {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 36px;
+            color: #060644;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .product-detail-category {
+            font-size: 12px;
+            color: #B9B59F;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .product-detail-size {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .product-detail-similar {
+            font-size: 14px;
+            font-weight: 600;
+            color: #060644;
+            margin-bottom: 10px;
+        }
+        
+        .product-detail-notes {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        
+        .product-detail-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #060644;
+            margin-bottom: 10px;
+        }
+        
+        .product-detail-tax {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 25px;
+        }
+        
+        .product-detail-description {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+        
+        .quantity-selector {
+            margin-bottom: 20px;
+        }
+
+        .quantity-selector label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #060644;
+            margin-bottom: 8px;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 36px;
+            height: 36px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .qty-btn:hover {
+            background: #060644;
+            color: white;
+            border-color: #060644;
+        }
+
+        .quantity-input-detail {
+            width: 70px;
+            height: 36px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .quantity-input-detail::-webkit-inner-spin-button,
+        .quantity-input-detail::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .add-to-cart-btn, .buy-now-btn {
+            padding: 14px 35px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart-btn {
+            background: #060644;
+            color: white;
+            border: none;
+        }
+
+        .add-to-cart-btn:hover {
+            opacity: 0.8;
+        }
+
+        .buy-now-btn {
+            background: transparent;
+            color: #060644;
+            border: 2px solid #060644;
+        }
+
+        .buy-now-btn:hover {
+            background: #060644;
+            color: white;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            color: #060644;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* Out of Stock Message */
+        .out-of-stock-message {
+            text-align: center;
+            padding: 60px 40px;
+            background: #f9f9f9;
+            border-radius: 20px;
+            margin: 40px 0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .out-of-stock-message .oos-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .out-of-stock-message h3 {
+            font-size: 24px;
+            color: #060644;
+            margin-bottom: 15px;
+        }
+
+        .out-of-stock-message p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 400px;
+        }
+
+        .out-of-stock-message .back-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #060644;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: opacity 0.3s;
+        }
+
+        .out-of-stock-message .back-btn:hover {
+            opacity: 0.8;
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: #060644;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        footer {
+            background: #060644;
+            color: #B9B59F;
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                position: static;
+                transform: none;
+                gap: 30px;
+                margin: 10px 0;
+            }
+            .product-detail-container {
+                padding: 20px;
+                gap: 30px;
+            }
+            .product-detail-name {
+                font-size: 28px;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="brand">INICIO</a>
+        <div class="nav-links">
+            <a href="/">HOME</a>
+            <a href="/products">PERFUMES</a>
+            <a href="/our-story">OUR STORY</a>
+            <a href="/faq">FAQS</a>
+        </div>
+        <div class="nav-icons">
+            <a href="#" id="searchIcon">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="10.5" cy="10.5" r="7.5"/>
+                    <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+                </svg>
+            </a>
+            <a href="/cart">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="9" cy="20" r="1.5"/>
+                    <circle cx="17" cy="20" r="1.5"/>
+                    <path d="M3 3h2l2 12h12l2-8H6"/>
+                </svg>
+            </a>
+            <a href="/dashboard_redirect" title="Account">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M5 20v-2a7 7 0 0 1 14 0v2"/>
+                </svg>
+            </a>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="/">Home</a> <span>></span> <a href="/products">Perfumes</a> <span>></span> <span>{{ product.name }}</span>
+    </div>
+
+    <div class="main-content">
+        <div class="product-detail-container">
+            <div class="product-detail-image">
+                <img src="/static/images/{{ product.image_url if product.image_url else product.name.lower().replace(' ', '-') + '.png' }}" alt="{{ product.name }}" onerror="this.src='https://via.placeholder.com/400x400/B9B59F/060644?text={{ product.name }}'">
+            </div>
+            <div class="product-detail-info">
+                <h1 class="product-detail-name">{{ product.name }}</h1>
+                <div class="product-detail-category">EXTRAIT DE PARFUM</div>
+                <div class="product-detail-size">50 mL / 1.7 FL. OZ</div>
+                
+                <div class="product-detail-similar">{{ product.description or 'Premium fragrance' }}</div>
+                <div class="product-detail-notes">Vanilla, Citrusy, Powdery, and Sweet</div>
+                
+                <div class="product-detail-price">₱{{ "%.2f"|format(product.price) }}</div>
+                <div class="product-detail-tax">Tax included. Shipping calculated at checkout.</div>
+
+                <div class="product-detail-description">
+                    Discover the quiet power of this signature scent that glides across the skin like silk. 
+                    It opens with a soft, addictive blend of vanilla and warm spices, melting into rich amber 
+                    and smooth musk to create a creamy, powdery veil that feels like second skin.
+                </div>
+
+                {% if product.stock > 0 %}
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <label>Quantity</label>
+                        <div class="quantity-control">
+                            <button type="button" class="qty-btn" onclick="decrementQuantity()">-</button>
+                            <input type="number" id="quantity" value="1" min="1" max="{{ product.stock }}" class="quantity-input-detail">
+                            <button type="button" class="qty-btn" onclick="incrementQuantity()">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button type="button" class="add-to-cart-btn" onclick="addToCartDetail()">Add to Cart</button>
+                        <button type="button" class="buy-now-btn" onclick="buyNow()">Buy it Now</button>
+                    </div>
+                </div>
+                {% else %}
+                <div class="out-of-stock-message">
+                    <div class="oos-icon">📦</div>
+                    <h3>Currently Out of Stock</h3>
+                    <p>This fragrance is temporarily unavailable. Please check back later or explore our other scents.</p>
+                    <a href="/products" class="back-btn">← Browse Other Fragrances</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 INICIO Parfum. All rights reserved.</p>
+        <p style="margin-top: 10px; font-size: 12px;">Luxury fragrances for the bold and the brave</p>
+    </footer>
+
+    <script src="/static/js/search.js"></script>
+    <script src="/static/js/transitions.js"></script>
+
+    <script>
+        // Quantity functions
+        function incrementQuantity() {
+            const input = document.getElementById('quantity');
+            let value = parseInt(input.value);
+            if (value < parseInt(input.max)) {
+                input.value = value + 1;
+            }
+        }
+
+        function decrementQuantity() {
+            const input = document.getElementById('quantity');
+            let value = parseInt(input.value);
+            if (value > 1) {
+                input.value = value - 1;
+            }
+        }
+
+        // Allow typing in quantity input
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInput = document.getElementById('quantity');
+            if (quantityInput) {
+                quantityInput.addEventListener('change', function() {
+                    let value = parseInt(this.value);
+                    let max = parseInt(this.max);
+                    if (isNaN(value) || value < 1) {
+                        this.value = 1;
+                    } else if (value > max) {
+                        this.value = max;
+                    }
+                });
+            }
+        });
+
+        // Add to Cart function
+        function addToCartDetail() {
+            const quantity = document.getElementById('quantity').value;
+            const productId = {{ product.id }};
+            const productName = "{{ product.name }}";
+            
+            fetch(`/add_to_cart/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `quantity=${quantity}`
+            })
+            .then(response => {
+                if (response.ok) {
+                    showNotification(`${productName} (x${quantity}) added to cart!`);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function buyNow() {
+            const quantity = document.getElementById('quantity').value;
+            const productId = {{ product.id }};
+            
+            fetch(`/add_to_cart/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `quantity=${quantity}`
+            })
+            .then(() => {
+                window.location.href = '/cart';
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

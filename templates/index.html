@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INICIO | Perfume Collection</title>
+<link rel="stylesheet" href="/static/css/animations.css">
+    <style>
+        /* Import Fonts */
+        @font-face {
+            font-family: 'Cronde';
+            src: url('/static/fonts/cronde.woff2') format('woff2'),
+                 url('/static/fonts/cronde.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* Secondary UI Font - Montserrat */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+        }
+        
+        /* ========== TYPOGRAPHY SYSTEM ========== */
+        /* CRONDE Font - Brand Identity */
+.brand, .hero-text h1, .featured-title, .who-we-are h2 {
+    font-family: 'Cronde', 'Georgia', serif;
+}
+        
+        /* Secondary Font - Montserrat for all body text */
+        body, .nav-icons a, .featured-subtitle, .product-feature-name, 
+        .product-feature-desc, .product-feature-price, .view-all-btn, 
+        .who-we-are p, .story-btn, .product-category, .btn-back {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* Navigation Bar */
+.navbar {
+    background: #B9B59F;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+/* Brand - Far Left (CRONDE font) */
+.brand {
+    font-family: 'Cronde', 'Georgia', serif;
+    font-size: 24px;
+    font-weight: normal;
+    color: #060644;
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+/* Center Navigation Links - Montserrat font */
+.nav-links {
+    display: flex;
+    gap: 50px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-links a {
+    font-family: 'Montserrat', sans-serif;
+    color: #060644;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+    opacity: 0.7;
+}
+        
+        /* Right Side Icons - Minimalist */
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .nav-icons a {
+            color: #060644;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-icons a:hover {
+            opacity: 0.7;
+        }
+        
+        /* Minimalist SVG Icons */
+        .icon {
+            width: 22px;
+            height: 22px;
+            stroke: #060644;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        
+        /* Hero Section - White background */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 40px 60px;
+            background: white;
+        }
+        
+        /* Image Container - Fixed width with proper spacing */
+        .image-container {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: 50px;
+            display: block;
+        }
+        
+        /* Overlapping Text on Image - Shifted Left with Breathing Room */
+        .hero-text {
+            position: absolute;
+            top: 35%;
+            left: 8%;
+            right: auto;
+            text-align: left;
+            color: #060644;
+            z-index: 10;
+        }
+        
+        .hero-text h1 {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 110px;
+            font-weight: normal;
+            letter-spacing: 2px;
+            margin: 0;
+            line-height: 1.1;
+            text-transform: none;
+        }
+        
+        /* CTA Button under hero text */
+        .hero-cta {
+            margin-top: 30px;
+        }
+        
+        .hero-cta .cta-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: #060644;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 40px;
+            transition: opacity 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .hero-cta .cta-btn:hover {
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .nav-links {
+        position: static;
+        transform: none;
+        gap: 30px;
+        margin: 10px 0;
+    }
+    .nav-links a {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+    }
+    .hero-text {
+        top: 25%;
+        left: 5%;
+    }
+    .hero-text h1 {
+        font-size: 48px;
+    }
+    .hero {
+        padding: 20px;
+    }
+    .hero-cta .cta-btn {
+        padding: 10px 25px;
+        font-size: 12px;
+    }
+}
+        
+        @media (max-width: 600px) {
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .nav-links a {
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+    .hero-text {
+        top: 15%;
+    }
+    .hero-text h1 {
+        font-size: 28px;
+    }
+    .hero-cta .cta-btn {
+        padding: 8px 20px;
+        font-size: 10px;
+    }
+}
+        
+        /* ========== FEATURED PRODUCTS SECTION ========== */
+        .featured-section {
+            padding: 80px 60px;
+            background: white;
+            text-align: center;
+        }
+        
+        .featured-title {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 48px;
+            font-weight: normal;
+            color: #060644;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .featured-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+        
+        .products-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-feature-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 250px;
+    box-shadow: 0 4px 15px rgba(6, 6, 68, 0.08);
+}
+
+.product-feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(6, 6, 68, 0.15);
+}
+
+.product-feature-image {
+    width: 100%;
+    height: 200px;
+    background: #fafafa;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.product-feature-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.product-category {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: #B9B59F;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.product-feature-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #060644;
+    margin: 8px 0;
+    letter-spacing: 0.5px;
+}
+
+.product-feature-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13.2px;  /* 10% larger than 12px */
+    font-weight: 400;
+    color: #888;
+    margin: 8px 0;
+}
+        
+        .product-feature-price {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #060644;
+            margin: 10px 0;
+        }
+        
+        .view-all-btn {
+            display: inline-block;
+            margin-top: 50px;
+            padding: 14px 45px;
+            background: #060644;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: opacity 0.3s;
+        }
+        
+        .view-all-btn:hover {
+            opacity: 0.8;
+        }
+        
+        /* ========== WHO WE ARE SECTION ========== */
+        .who-we-are {
+            padding: 100px 60px;
+            background: white;
+            text-align: center;
+        }
+        
+        .who-we-are h2 {
+            font-family: 'Cronde', 'Georgia', serif;
+            font-size: 48px;
+            font-weight: normal;
+            color: #060644;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        
+        .who-we-are p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: #666;
+            max-width: 650px;
+            margin: 0 auto 35px auto;
+            line-height: 1.6;
+        }
+        
+        .story-btn {
+            display: inline-block;
+            padding: 14px 45px;
+            background: #060644;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: opacity 0.3s;
+        }
+        
+        .story-btn:hover {
+            opacity: 0.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: #060644;
+            color: #B9B59F;
+            text-align: center;
+            padding: 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .featured-section {
+                padding: 50px 20px;
+            }
+            .featured-title {
+                font-size: 36px;
+            }
+            .who-we-are {
+                padding: 60px 20px;
+            }
+            .who-we-are h2 {
+                font-size: 36px;
+            }
+            .who-we-are p {
+                font-size: 16px;
+            }
+        }
+
+/* Search Modal */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+    z-index: 2000;
+    transition: right 0.3s ease;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.search-overlay.active {
+    right: 0;
+}
+
+.search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-header h3 {
+    font-family: 'Cronde', 'Georgia', serif;
+    font-size: 24px;
+    color: #060644;
+    font-weight: normal;
+}
+
+.close-search {
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.close-search:hover {
+    color: #e53e3e;
+}
+
+.search-input-wrapper {
+    margin-bottom: 30px;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+}
+
+.search-input-wrapper input:focus {
+    outline: none;
+    border-color: #060644;
+}
+
+.search-results {
+    margin-top: 20px;
+}
+
+.search-result-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-result-item:hover {
+    background: #f9f9f9;
+}
+
+.search-result-image {
+    width: 60px;
+    height: 60px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.search-result-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-result-info h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #060644;
+    margin-bottom: 5px;
+}
+
+.search-result-info p {
+    font-size: 13px;
+    color: #888;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.search-overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999;
+    display: none;
+}
+
+.search-overlay-backdrop.active {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <!-- Brand - Far Left -->
+        <a href="/" class="brand">INICIO</a>
+        
+        <!-- Center Navigation Links -->
+        <div class="nav-links">
+            <a href="/">HOME</a>
+            <a href="/products">PERFUMES</a>
+            <a href="/our-story">OUR STORY</a>
+            <a href="/faq">FAQS</a>
+        </div>
+        
+        <!-- Right Side Icons - Minimalist SVG -->
+        <div class="nav-icons">
+            <a href="#" id="searchIcon" title="Search">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="10.5" cy="10.5" r="7.5"/>
+                    <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+                </svg>
+            </a>
+            <a href="/cart" title="Cart">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="9" cy="20" r="1.5"/>
+                    <circle cx="17" cy="20" r="1.5"/>
+                    <path d="M3 3h2l2 12h12l2-8H6"/>
+                </svg>
+            </a>
+            <a href="/dashboard_redirect" title="Account">
+                <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M5 20v-2a7 7 0 0 1 14 0v2"/>
+                </svg>
+            </a>
+        </div>
+    </nav>
+    
+    <div class="hero">
+        <div class="image-container">
+            <img src="/static/images/frontpageimage.png" alt="Perfume Bottle" class="hero-image">
+            <div class="hero-text">
+                <h1>Inspiringly Bold<br>Built to Perform</h1>
+                <div class="hero-cta">
+                    <a href="/products" class="cta-btn">DISCOVER NOW</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <!-- Featured Products Section -->
+    <div class="featured-section">
+        <h2 class="featured-title">Featured Fragrances</h2>
+        <p class="featured-subtitle">Explore our curated fragrance collection designed to leave a lasting impression</p>
+        
+        <div class="products-row">
+    <!-- Product 1 - Very Naughty -->
+    <div class="product-feature-card" onclick="location.href='/perfume/{{ very_naughty_id }}'">
+        <div class="product-feature-image">
+            <img src="/static/images/very-naughty.png" alt="Very Naughty" onerror="this.src='https://via.placeholder.com/200x200/B9B59F/060644?text=Very+Naughty'">
+        </div>
+        <div class="product-category">EXTRAIT DE PARFUM</div>
+        <div class="product-feature-name">VERY NAUGHTY</div>
+        <div class="product-feature-desc">Similar to Versace Eros</div>
+    </div>
+    
+    <!-- Product 2 - You Should -->
+    <div class="product-feature-card" onclick="location.href='/perfume/{{ you_should_id }}'">
+        <div class="product-feature-image">
+            <img src="/static/images/you-should.png" alt="You Should" onerror="this.src='https://via.placeholder.com/200x200/B9B59F/060644?text=You+Should'">
+        </div>
+        <div class="product-category">EXTRAIT DE PARFUM</div>
+        <div class="product-feature-name">YOU SHOULD</div>
+        <div class="product-feature-desc">Similar to Yves Saint Laurent Y</div>
+    </div>
+    
+    <!-- Product 3 - Burn for You -->
+    <div class="product-feature-card" onclick="location.href='/perfume/{{ burn_for_you_id }}'">
+        <div class="product-feature-image">
+            <img src="/static/images/burn-for-you.png" alt="Burn for You" onerror="this.src='https://via.placeholder.com/200x200/B9B59F/060644?text=Burn+for+You'">
+        </div>
+        <div class="product-category">EXTRAIT DE PARFUM</div>
+        <div class="product-feature-name">BURN FOR YOU</div>
+        <div class="product-feature-desc">Similar to Bvlgari Omnia Amethyste</div>
+    </div>
+    
+    <!-- Product 4 - Divine Sin -->
+    <div class="product-feature-card" onclick="location.href='/perfume/{{ divine_sin_id }}'">
+        <div class="product-feature-image">
+            <img src="/static/images/divine-sin.png" alt="Divine Sin" onerror="this.src='https://via.placeholder.com/200x200/B9B59F/060644?text=Divine+Sin'">
+        </div>
+        <div class="product-category">EXTRAIT DE PARFUM</div>
+        <div class="product-feature-name">DIVINE SIN</div>
+        <div class="product-feature-desc">Similar to Dior Sauvage</div>
+    </div>
+</div>
+        
+        <a href="/products" class="view-all-btn">VIEW ALL PERFUMES</a>
+    </div>
+    
+    <!-- Who We Are Section -->
+    <div class="who-we-are">
+        <h2>Who We Are</h2>
+        <p>Inicio Parfum. Inspired by boldness and perfected through performance</p>
+        <a href="/our-story" class="story-btn">OUR STORY</a>
+    </div>
+    
+    <footer>
+    <p>© 2024 INICIO Parfum. All rights reserved.</p>
+    <p style="margin-top: 10px; font-size: 12px;">Luxury fragrances for the bold and the brave</p>
+</footer>
+
+   <!-- Search Modal -->
+    <div class="search-overlay-backdrop" id="searchBackdrop"></div>
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-header">
+            <h3>Search</h3>
+            <span class="close-search" id="closeSearch">&times;</span>
+        </div>
+        <div class="search-input-wrapper">
+            <input type="text" id="searchInput" placeholder="Search for a fragrance..." autocomplete="off">
+        </div>
+        <div class="search-results" id="searchResults">
+        </div>
+    </div>
+
+    <script src="/static/js/search.js"></script>
+
+<script src="/static/js/transitions.js"></script>
+
+</body>
+</html>
